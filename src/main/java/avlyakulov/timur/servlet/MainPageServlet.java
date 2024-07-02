@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.thymeleaf.context.Context;
 
 import java.io.IOException;
@@ -23,8 +24,16 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Context context = new Context();
-        List<User> users = userService.findAll();
-        context.setVariable("users", users);
-        ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageMain, context, resp);
+
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("current_user_id");
+
+        if (userId == null) {
+            resp.sendRedirect("/simple_admin_panel/login");
+        } else {
+            List<User> users = userService.findAll();
+            context.setVariable("users", users);
+            ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageMain, context, resp);
+        }
     }
 }

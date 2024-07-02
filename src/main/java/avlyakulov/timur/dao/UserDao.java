@@ -2,6 +2,7 @@ package avlyakulov.timur.dao;
 
 import avlyakulov.timur.config.db.DataSource;
 import avlyakulov.timur.entity.User;
+import avlyakulov.timur.exception.AuthException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
@@ -37,6 +38,21 @@ public class UserDao {
 
     public void findById(Integer id) {
 
+    }
+
+    public User findByLogin(String login) {
+        String query = "select * from users where login = ?";
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next())
+                return setUser(resultSet);
+            throw new AuthException("Login or password isn't correct");
+        } catch (SQLException e) {
+            log.error("Error with connection to db");
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     private User setUser(ResultSet resultSet) throws SQLException {
