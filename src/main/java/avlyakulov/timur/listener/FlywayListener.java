@@ -1,4 +1,4 @@
-package avlyakulov.timur.filter;
+package avlyakulov.timur.listener;
 
 import avlyakulov.timur.config.db.FlywayInitializer;
 import jakarta.servlet.ServletContextEvent;
@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @WebListener
-public class DatabaseFilter implements ServletContextListener {
+public class FlywayListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         FlywayInitializer flywayInitializer = new FlywayInitializer();

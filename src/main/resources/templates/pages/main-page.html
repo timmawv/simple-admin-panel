@@ -10,6 +10,7 @@
 <main>
     <h1>Your personal info!</h1>
     <div th:if="users != null">
+        <h1 th:if="${#lists.isEmpty(users)}">There no users in db</h1>
         <div th:each="user : ${users}">
             <h3 th:text="'Your id ' + ${user.getId()}"></h3>
             <h3 th:text="'Your login ' + ${user.getLogin()}"></h3>
