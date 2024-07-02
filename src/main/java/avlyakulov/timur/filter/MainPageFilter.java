@@ -19,9 +19,9 @@ public class MainPageFilter implements Filter {
 
         HttpSession session = req.getSession();
 
-        Integer userId = (Integer) session.getAttribute("user_id");
+        String userLogin = (String) session.getAttribute("user_login");
 
-        if (userId == null) {
+        if (userLogin == null) {
             resp.sendRedirect("/simple_admin_panel/login");
         } else {
             filterChain.doFilter(req, resp);

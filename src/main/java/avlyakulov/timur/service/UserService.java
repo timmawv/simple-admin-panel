@@ -17,12 +17,10 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public Integer loginUser(UserDto userDto) throws AuthException {
+    public void loginUser(UserDto userDto) throws AuthException {
         User user = userDao.findByLogin(userDto.getLogin());
 
         if (!user.getPassword().equals(userDto.getPassword()))
             throw new AuthException("Login or password isn't correct");
-
-        return user.getId();
     }
 }

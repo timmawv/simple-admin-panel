@@ -1,5 +1,6 @@
 package avlyakulov.timur.listener;
 
+import avlyakulov.timur.config.db.DataSource;
 import avlyakulov.timur.config.db.FlywayInitializer;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -17,6 +18,6 @@ public class FlywayListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        ServletContextListener.super.contextDestroyed(sce);
+        DataSource.closeConnection();
     }
 }

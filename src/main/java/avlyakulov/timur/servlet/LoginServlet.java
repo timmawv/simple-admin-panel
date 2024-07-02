@@ -36,9 +36,9 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         UserDto userDto = new UserDto(login, password);
         try {
-            Integer userId = userService.loginUser(userDto);
+            userService.loginUser(userDto);
             HttpSession session = req.getSession();
-            session.setAttribute("user_id", userId);
+            session.setAttribute("user_login", login);
             resp.sendRedirect("/simple_admin_panel/main-page");
         } catch (AuthException e) {
             context.setVariable("error", e.getMessage());

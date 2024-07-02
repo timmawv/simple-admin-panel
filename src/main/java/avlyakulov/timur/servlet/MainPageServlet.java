@@ -24,16 +24,10 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Context context = new Context();
-
-        HttpSession session = req.getSession();
-        String userId = (String) session.getAttribute("current_user_id");
-
-        if (userId == null) {
-            resp.sendRedirect("/simple_admin_panel/login");
-        } else {
-            List<User> users = userService.findAll();
-            context.setVariable("users", users);
-            ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageMain, context, resp);
-        }
+        String userLogin = (String) req.getSession().getAttribute("user_login");
+        context.setVariable("login", userLogin);
+        List<User> users = userService.findAll();
+        context.setVariable("users", users);
+        ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageMain, context, resp);
     }
 }
