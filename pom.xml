@@ -6,7 +6,8 @@
 
     <groupId>avlyakulov.timur</groupId>
     <artifactId>simple-admin-panel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
