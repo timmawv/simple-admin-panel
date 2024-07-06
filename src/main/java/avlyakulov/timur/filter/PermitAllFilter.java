@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/login", "/register"})
-public class AuthFilter implements Filter {
+public class PermitAllFilter implements Filter {
 
 
     @Override

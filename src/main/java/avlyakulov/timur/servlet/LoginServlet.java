@@ -2,6 +2,7 @@ package avlyakulov.timur.servlet;
 
 import avlyakulov.timur.dao.UserDao;
 import avlyakulov.timur.dto.UserDto;
+import avlyakulov.timur.dto.UserSession;
 import avlyakulov.timur.exception.AuthException;
 import avlyakulov.timur.service.UserService;
 import avlyakulov.timur.util.thymeleaf.ThymeleafUtilRespondHtmlView;
@@ -36,9 +37,9 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         UserDto userDto = new UserDto(login, password);
         try {
-            userService.loginUser(userDto);
+            UserSession userSession = userService.loginUser(userDto);
             HttpSession session = req.getSession();
-            session.setAttribute("user_login", login);
+            session.setAttribute("user_session", userSession);
             resp.sendRedirect("/simple_admin_panel/main-page");
         } catch (AuthException e) {
             context.setVariable("error", e.getMessage());

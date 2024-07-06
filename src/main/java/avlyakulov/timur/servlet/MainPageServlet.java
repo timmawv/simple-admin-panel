@@ -1,6 +1,7 @@
 package avlyakulov.timur.servlet;
 
 import avlyakulov.timur.dao.UserDao;
+import avlyakulov.timur.dto.UserSession;
 import avlyakulov.timur.entity.User;
 import avlyakulov.timur.service.UserService;
 import avlyakulov.timur.util.thymeleaf.ThymeleafUtilRespondHtmlView;
@@ -24,9 +25,12 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Context context = new Context();
-        String userLogin = (String) req.getSession().getAttribute("user_login");
-        context.setVariable("login", userLogin);
-        List<User> users = userService.findAll();
+        UserSession userSession = (UserSession) req.getSession().getAttribute("user_session");
+        context.setVariable("login", userSession.getLogin());
+        context.setVariable("role", userSession.getRole());
+
+        List<User> users = userService.giveInformationByUserLogin(userSession.getLogin());
+
         context.setVariable("users", users);
         ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageMain, context, resp);
     }

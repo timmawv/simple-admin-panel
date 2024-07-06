@@ -20,8 +20,4 @@ public class RegisterServlet extends HttpServlet {
         ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageRegister, context, resp);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 }

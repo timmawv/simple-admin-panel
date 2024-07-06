@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/main-page", "/users/*"})
-public class MainPageFilter implements Filter {
+public class AuthenticatedFilter implements Filter {
 
 
     @Override

@@ -12,7 +12,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        session.setAttribute("user_login", null);
+        session.setAttribute("user_session", null);
         resp.sendRedirect("/simple_admin_panel/login");
     }
 }
