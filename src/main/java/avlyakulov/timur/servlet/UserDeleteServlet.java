@@ -10,23 +10,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/users")
-public class UserServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/users/delete")
+public class UserDeleteServlet extends HttpServlet {
 
     private final UserService userService = new UserService(new UserDao());
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String pathInfo = req.getPathInfo(); // /2/edit
-        if (pathInfo != null && pathInfo.matches("/\\d+")) {
-
-        } else {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        int userId = Integer.parseInt(req.getParameter("id"));
+        userService.deleteUser(userId);
+        resp.sendRedirect("/simple_admin_panel/main-page");
     }
 }

@@ -60,7 +60,6 @@
             <h1>Welcome Admin!</h1>
             <div th:if="users != null">
                 <h1 th:if="${#lists.isEmpty(users)}">There no users in db</h1>
-
                 <table>
                     <tr>
                         <th>ID</th>
@@ -74,12 +73,14 @@
                         <td th:text="${user.getLogin()}"></td>
                         <td th:text="${user.getPassword()}"></td>
                         <td>
-                            <form method="GET" th:action="'/simple_admin_panel/users/' + ${user.getId()} + '/edit'">
+                            <form method="GET" th:action="'/simple_admin_panel/users/edit'">
+                                <input type="hidden" name="id" th:value="${user.getId()}">
                                 <button type="submit" class="btn btn-primary">Edit user</button>
                             </form>
                         </td>
                         <td>
-                            <form method="DELETE" th:action="'/simple_admin_panel/users/' + ${user.getId()}">
+                            <form method="post" th:action="'/simple_admin_panel/users/delete'">
+                                <input type="hidden" name="id" th:value="${user.getId()}">
                                 <button type="submit" class="btn btn-danger">Delete user</button>
                             </form>
                         </td>

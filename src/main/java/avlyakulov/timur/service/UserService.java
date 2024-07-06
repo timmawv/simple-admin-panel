@@ -3,9 +3,10 @@ package avlyakulov.timur.service;
 import avlyakulov.timur.dao.UserDao;
 import avlyakulov.timur.dto.UserDto;
 import avlyakulov.timur.dto.UserSession;
+import avlyakulov.timur.dto.UserUpdateDto;
 import avlyakulov.timur.entity.User;
 import avlyakulov.timur.exception.AuthException;
-import avlyakulov.timur.exception.UserAlreadyExistException;
+import avlyakulov.timur.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,9 +16,19 @@ public class UserService {
 
     private final UserDao userDao;
 
+    private final UserMapper userMapper = UserMapper.INSTANCE;
 
     public void createUser(UserDto userDto) {
         userDao.create(userDto.getLogin(), userDto.getPassword());
+    }
+
+    public void updateUser(UserUpdateDto userUpdateDto) {
+        User user = userMapper.toUser(userUpdateDto);
+        userDao.updateUser(user);
+    }
+
+    public void deleteUser(Integer userId) {
+        userDao.deleteUser(userId);
     }
 
     public UserSession loginUser(UserDto userDto) throws AuthException {

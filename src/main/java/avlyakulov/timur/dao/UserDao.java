@@ -21,10 +21,10 @@ public class UserDao {
 
         try (Connection connection = DataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-           statement.setString(1, login);
-           statement.setString(2, password);
+            statement.setString(1, login);
+            statement.setString(2, password);
 
-           statement.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException e) {
             log.error("Error with connection to db");
             throw new UserAlreadyExistException("user already exists with this login");
@@ -48,10 +48,6 @@ public class UserDao {
         }
     }
 
-    public void findById(Integer id) {
-
-    }
-
     public User findByLogin(String login) {
         String query = "select * from users where login = ?";
         try (Connection connection = DataSource.getConnection();
@@ -64,6 +60,36 @@ public class UserDao {
         } catch (SQLException e) {
             log.error("Error with connection to db");
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void updateUser(User user) {
+        String query = "update users set login = ?, password = ? where id = ?";
+
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setInt(3, user.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Error with connection to db");
+            throw new UserAlreadyExistException("user already exists with this login");
+        }
+    }
+
+    public void deleteUser(Integer userId) {
+        String query = "delete from users where id = ?";
+
+        try (Connection connection = DataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Error with connection to db");
+            throw new RuntimeException("Error with database");
         }
     }
 
