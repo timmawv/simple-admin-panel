@@ -1,5 +1,6 @@
 package avlyakulov.timur.filter;
 
+import avlyakulov.timur.dto.UserSession;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,8 +9,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/login", "/register"})
-public class AuthFilter implements Filter {
+@WebFilter(urlPatterns = {"/main-page", "/users/*"})
+public class MainPageFilter implements Filter {
 
 
     @Override
@@ -19,12 +20,12 @@ public class AuthFilter implements Filter {
 
         HttpSession session = req.getSession();
 
-        String userLogin = (String) session.getAttribute("user_login");
+        UserSession userSession = (UserSession) session.getAttribute("user_session");
 
-        if (userLogin == null) {
-            filterChain.doFilter(req, resp);
+        if (userSession == null) {
+            resp.sendRedirect("/simple_admin_panel/login");
         } else {
-            resp.sendRedirect("/simple_admin_panel/main-page");
+            filterChain.doFilter(req, resp);
         }
     }
 }
