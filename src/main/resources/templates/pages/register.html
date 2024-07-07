@@ -24,6 +24,7 @@
         main {
             flex-grow: 1;
         }
+
         footer {
             font-size: 30px;
         }
@@ -32,7 +33,9 @@
 <body>
 <header th:insert="~{fragments/header::header}"></header>
 <main>
-        <form style="width: 40%; margin: auto" action="/simple_admin_panel/register" method="POST">
+    <div class="container">
+        <form th:if="${success_registration == null}" style="width: 40%; margin: auto"
+              action="/simple_admin_panel/register" method="POST">
             <div class="mb-3">
                 <label for="exampleInputEmail" class="form-label">Username or Email</label>
                 <input type="text" name="login" class="form-control" id="exampleInputEmail"
@@ -46,6 +49,13 @@
             <p style="color: red" th:if="${error != null}" th:text="${error}"></p>
             <button type="submit" class="btn btn-primary">Register Account</button>
         </form>
+
+        <div style="text-align:center;background: lightgreen;padding: 30px;border-radius: 30px;" th:if="${success_registration} != null and ${success_registration} == true" class="success_register">
+            <h1>You were successfully registered!</h1>
+            <a style="margin-top: 15px" href="/simple_admin_panel/login" type="button" class="btn btn-primary">Go to
+                login page</a>
+        </div>
+    </div>
 </main>
 <footer th:insert="~{fragments/footer::footer}"></footer>
 </body>

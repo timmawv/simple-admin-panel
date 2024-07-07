@@ -1,6 +1,6 @@
 package avlyakulov.timur.mapper;
 
-import avlyakulov.timur.dto.UserUpdateDto;
+import avlyakulov.timur.dto.UserDto;
 import avlyakulov.timur.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -10,5 +10,5 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    User toUser(UserUpdateDto userUpdateDto);
+    User toUser(UserDto userDto);
 }

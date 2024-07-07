@@ -5,6 +5,7 @@ import avlyakulov.timur.dto.UserDto;
 import avlyakulov.timur.dto.UserSession;
 import avlyakulov.timur.exception.UserAlreadyExistException;
 import avlyakulov.timur.service.UserService;
+import avlyakulov.timur.util.auth.AuthParamUtil;
 import avlyakulov.timur.util.thymeleaf.ThymeleafUtilRespondHtmlView;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,9 +26,7 @@ public class UserCreateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Context context = new Context();
-        UserSession userSession = (UserSession) req.getSession().getAttribute("user_session");
-        context.setVariable("login", userSession.getLogin());
-        context.setVariable("role", userSession.getRole());
+        AuthParamUtil.setParamsToPage(req, context);
         ThymeleafUtilRespondHtmlView.respondHtmlPage(userCreatePage, context, resp);
     }
 
@@ -42,9 +41,7 @@ public class UserCreateServlet extends HttpServlet {
             resp.sendRedirect("/simple_admin_panel/main-page");
         } catch (UserAlreadyExistException e) {
             context.setVariable("error", e.getMessage());
-            UserSession userSession = (UserSession) req.getSession().getAttribute("user_session");
-            context.setVariable("login", userSession.getLogin());
-            context.setVariable("role", userSession.getRole());
+            AuthParamUtil.setParamsToPage(req, context);
             ThymeleafUtilRespondHtmlView.respondHtmlPage(userCreatePage, context, resp);
         }
     }

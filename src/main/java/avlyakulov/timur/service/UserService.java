@@ -3,7 +3,6 @@ package avlyakulov.timur.service;
 import avlyakulov.timur.dao.UserDao;
 import avlyakulov.timur.dto.UserDto;
 import avlyakulov.timur.dto.UserSession;
-import avlyakulov.timur.dto.UserUpdateDto;
 import avlyakulov.timur.entity.User;
 import avlyakulov.timur.exception.AuthException;
 import avlyakulov.timur.mapper.UserMapper;
@@ -22,8 +21,8 @@ public class UserService {
         userDao.create(userDto.getLogin(), userDto.getPassword());
     }
 
-    public void updateUser(UserUpdateDto userUpdateDto) {
-        User user = userMapper.toUser(userUpdateDto);
+    public void updateUser(UserDto userDto) {
+        User user = userMapper.toUser(userDto);
         userDao.updateUser(user);
     }
 
@@ -44,10 +43,10 @@ public class UserService {
         User user = userDao.findByLogin(login);
 
         switch (user.getRole()) {
-            case "USER" -> {
+            case "USER", "user" -> {
                 return List.of(user);
             }
-            case "ADMIN" -> {
+            case "ADMIN", "admin" -> {
                 return userDao.findAll().stream()
                         .filter(u -> u.getRole().equals("USER"))
                         .toList();

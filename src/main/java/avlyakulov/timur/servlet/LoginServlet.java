@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 import org.thymeleaf.context.Context;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {

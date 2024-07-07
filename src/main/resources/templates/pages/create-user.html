@@ -24,6 +24,7 @@
         main {
             flex-grow: 1;
         }
+
         footer {
             font-size: 30px;
         }
@@ -32,18 +33,21 @@
 <body>
 <header th:insert="~{fragments/header::header}"></header>
 <main>
-    <form style="width: 40%; margin: auto" action="/simple_admin_panel/users/create" method="POST">
-        <div class="mb-3">
-            <label for="exampleInputEmail" class="form-label">Username or Email</label>
-            <input type="text" name="login" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" required>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
-        </div>
-        <p style="color: red" th:if="${error != null}" th:text="${error}"></p>
-        <button type="submit" class="btn btn-primary">Create Account</button>
-    </form>
+    <div class="container">
+        <form style="width: 40%; margin: auto" action="/simple_admin_panel/users/create" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail" class="form-label">Username or Email</label>
+                <input type="text" name="login" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+                       required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+            </div>
+            <p style="color: red" th:if="${error != null}" th:text="${error}"></p>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+    </div>
 </main>
 <footer th:insert="~{fragments/footer::footer}"></footer>
 </body>

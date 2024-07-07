@@ -35,7 +35,8 @@ public class RegisterServlet extends HttpServlet {
         UserDto userDto = new UserDto(login, password);
         try {
             userService.createUser(userDto);
-            resp.sendRedirect("/simple_admin_panel/main-page");
+            context.setVariable("success_registration", true);
+            ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageRegister, context, resp);
         } catch (UserAlreadyExistException e) {
             context.setVariable("error", e.getMessage());
             ThymeleafUtilRespondHtmlView.respondHtmlPage(htmlPageRegister, context, resp);

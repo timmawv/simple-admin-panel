@@ -16,6 +16,4 @@ public class FlywayInitializer {
     public void addMigrationsToDB() {
         flyway.migrate();
     }
-
-
 }

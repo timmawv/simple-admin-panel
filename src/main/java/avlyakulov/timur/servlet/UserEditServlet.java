@@ -1,10 +1,11 @@
 package avlyakulov.timur.servlet;
 
 import avlyakulov.timur.dao.UserDao;
+import avlyakulov.timur.dto.UserDto;
 import avlyakulov.timur.dto.UserSession;
-import avlyakulov.timur.dto.UserUpdateDto;
 import avlyakulov.timur.exception.UserAlreadyExistException;
 import avlyakulov.timur.service.UserService;
+import avlyakulov.timur.util.auth.AuthParamUtil;
 import avlyakulov.timur.util.thymeleaf.ThymeleafUtilRespondHtmlView;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,10 +26,8 @@ public class UserEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Context context = new Context();
-        UserSession userSession = (UserSession) req.getSession().getAttribute("user_session");
-        context.setVariable("login", userSession.getLogin());
-        context.setVariable("role", userSession.getRole());
         context.setVariable("id", req.getParameter("id"));
+        AuthParamUtil.setParamsToPage(req, context);
         ThymeleafUtilRespondHtmlView.respondHtmlPage(userCreatePage, context, resp);
     }
 
@@ -38,16 +37,14 @@ public class UserEditServlet extends HttpServlet {
         Integer id = Integer.parseInt(req.getParameter("id"));
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        UserUpdateDto userUpdateDto = new UserUpdateDto(id, login, password);
+        UserDto userDto = new UserDto(id, login, password);
         try {
-            userService.updateUser(userUpdateDto);
+            userService.updateUser(userDto);
             resp.sendRedirect("/simple_admin_panel/main-page");
         } catch (UserAlreadyExistException e) {
             context.setVariable("error", e.getMessage());
             context.setVariable("id", id);
-            UserSession userSession = (UserSession) req.getSession().getAttribute("user_session");
-            context.setVariable("login", userSession.getLogin());
-            context.setVariable("role", userSession.getRole());
+            AuthParamUtil.setParamsToPage(req, context);
             ThymeleafUtilRespondHtmlView.respondHtmlPage(userCreatePage, context, resp);
         }
     }

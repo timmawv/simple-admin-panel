@@ -34,6 +34,7 @@
 <header th:insert="~{fragments/header::header}"></header>
 
 <main>
+    <div class="container">
     <form style="width: 40%; margin: auto" action="/simple_admin_panel/login" method="POST">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username</label>
@@ -47,6 +48,7 @@
         <p style="color: red" th:if="${error != null}" th:text="${error}"></p>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
+    </div>
 </main>
 
 <footer th:insert="~{fragments/footer::footer}"></footer>

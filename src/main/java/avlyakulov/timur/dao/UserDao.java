@@ -32,15 +32,15 @@ public class UserDao {
     }
 
     public List<User> findAll() {
-        String query = "select * from users";
+        String query = "select * from users order by id";
 
         try (Connection connection = DataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             List<User> users = new ArrayList<>();
-            while (resultSet.next()) {
+            while (resultSet.next())
                 users.add(setUser(resultSet));
-            }
+
             return users;
         } catch (SQLException e) {
             log.error("Error with connection to db");
